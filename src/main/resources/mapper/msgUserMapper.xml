@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.maxu.mychat.dao.msgUserMapper" >
+  <resultMap id="BaseResultMap" type="com.maxu.mychat.model.msgUser" >
+    <result column="msgFrom" property="msgfrom" jdbcType="INTEGER" />
+    <result column="msgTo" property="msgto" jdbcType="INTEGER" />
+    <result column="msgTime" property="msgtime" jdbcType="VARCHAR" />
+    <result column="msgContent" property="msgcontent" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    msgFrom, msgTo, msgTime, msgContent
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.maxu.mychat.model.msgUserExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from msguser
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.maxu.mychat.model.msgUserExample" >
+    delete from msguser
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.maxu.mychat.model.msgUser" >
+    insert into msguser (msgFrom, msgTo, msgTime, 
+      msgContent)
+    values (#{msgfrom,jdbcType=INTEGER}, #{msgto,jdbcType=INTEGER}, #{msgtime,jdbcType=VARCHAR}, 
+      #{msgcontent,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.maxu.mychat.model.msgUser" >
+    insert into msguser
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="msgfrom != null" >
+        msgFrom,
+      </if>
+      <if test="msgto != null" >
+        msgTo,
+      </if>
+      <if test="msgtime != null" >
+        msgTime,
+      </if>
+      <if test="msgcontent != null" >
+        msgContent,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="msgfrom != null" >
+        #{msgfrom,jdbcType=INTEGER},
+      </if>
+      <if test="msgto != null" >
+        #{msgto,jdbcType=INTEGER},
+      </if>
+      <if test="msgtime != null" >
+        #{msgtime,jdbcType=VARCHAR},
+      </if>
+      <if test="msgcontent != null" >
+        #{msgcontent,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.maxu.mychat.model.msgUserExample" resultType="java.lang.Integer" >
+    select count(*) from msguser
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update msguser
+    <set >
+      <if test="record.msgfrom != null" >
+        msgFrom = #{record.msgfrom,jdbcType=INTEGER},
+      </if>
+      <if test="record.msgto != null" >
+        msgTo = #{record.msgto,jdbcType=INTEGER},
+      </if>
+      <if test="record.msgtime != null" >
+        msgTime = #{record.msgtime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.msgcontent != null" >
+        msgContent = #{record.msgcontent,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update msguser
+    set msgFrom = #{record.msgfrom,jdbcType=INTEGER},
+      msgTo = #{record.msgto,jdbcType=INTEGER},
+      msgTime = #{record.msgtime,jdbcType=VARCHAR},
+      msgContent = #{record.msgcontent,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

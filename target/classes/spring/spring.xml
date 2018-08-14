@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+	<!-- 排除扫描Controller -->
+	<context:component-scan base-package="com.maxu">
+		<context:exclude-filter type="annotation"
+			expression="org.springframework.stereotype.Controller" />
+	</context:component-scan>
+
+	<!-- 数据源，事务控制 -->
+	<!-- 将创建的dbconfig.properties文件引入 -->
+	<context:property-placeholder
+		location="classpath:config/jdbcConfig.properties" />
+	<bean id="pooledDataSource"
+		class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<property name="jdbcUrl" value="${jdbc.url}"></property>
+		<property name="driverClass" value="${jdbc.driverClass}"></property>
+		<property name="user" value="${jdbc.username}"></property>
+		<property name="password" value="${jdbc.password}"></property>
+		<!-- 初始化连接大小 -->
+		<property name="initialPoolSize"
+			value="${jdbc.initialPoolSize}"></property>
+		<!-- 连接池最大连接数 -->
+		<property name="maxPoolSize" value="${jdbc.maxPoolSize}"></property>
+		<!-- 连接池最小连接数 -->
+		<property name="minPoolSize" value="${jdbc.minPoolSize}"></property>
+		<!-- 连接池最大等待时间 -->
+		<property name="maxIdleTime" value="${jdbc.maxIdleTime}"></property>
+	</bean>
+
+	<!-- 配置和Mybatis的整合 -->
+	<bean name="sqlSessionFactory"
+		class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="configLocation"
+			value="classpath:config/mybatisConfig.xml"></property>
+		<property name="dataSource" ref="pooledDataSource"></property>
+		<property name="mapperLocations"
+			value="classpath:mapper/*.xml"></property>
+	</bean>
+	<!-- 配置扫描器，将mybatis接口的实现加入到ioc容器中 -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="sqlSessionFactoryBeanName"
+			value="sqlSessionFactory" />
+		<!-- 扫描所有dao接口的实现加入到ioc容器 -->
+		<property name="basePackage" value="com.maxu.mychat.dao"></property>
+	</bean>
+	<!-- 事务控制配置 -->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<!-- 控制住数据源 -->
+		<property name="dataSource" ref="pooledDataSource"></property>
+	</bean>
+	<!-- 开启基于注解的事务，使用xml配置形式的事务(比较重要的使用配置式) -->
+	<aop:config>
+		<!-- 切入点表达式 -->
+		<aop:pointcut
+			expression="execution(* com.maxu.mychat.service..*(..))" id="txPoint" />
+		<!-- 配置事务增强 -->
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="txPoint" />
+	</aop:config>
+	<!-- 配置事务增强，事务如何切入 -->
+	<tx:advice id="txAdvice"
+		transaction-manager="transactionManager">
+		<tx:attributes>
+			<!-- 所有方法都是事务方法 -->
+			<tx:method name="*" />
+			<!-- 以get开始的所有方法 -->
+			<tx:method name="get*" read-only="true" />
+		</tx:attributes>
+	</tx:advice>
+
+</beans>

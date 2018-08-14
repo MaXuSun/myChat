@@ -1,0 +1,393 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.maxu.mychat.dao.LogMapper">
+  <resultMap id="BaseResultMap" type="com.maxu.mychat.model.Log">
+    <id column="logId" jdbcType="INTEGER" property="logid" />
+    <result column="logUserId" jdbcType="INTEGER" property="loguserid" />
+    <result column="logTime" jdbcType="VARCHAR" property="logtime" />
+    <result column="logType" jdbcType="VARCHAR" property="logtype" />
+    <result column="logDetail" jdbcType="VARCHAR" property="logdetail" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    logId, logUserId, logTime, logType, logDetail
+  </sql>
+  <select id="selectByExample" parameterType="com.maxu.mychat.model.LogExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from log
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from log
+    where logId = #{logid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from log
+    where logId = #{logid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.maxu.mychat.model.LogExample">
+    delete from log
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.maxu.mychat.model.Log">
+    insert into log (logId, logUserId, logTime, 
+      logType, logDetail)
+    values (#{logid,jdbcType=INTEGER}, #{loguserid,jdbcType=INTEGER}, #{logtime,jdbcType=VARCHAR}, 
+      #{logtype,jdbcType=VARCHAR}, #{logdetail,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.maxu.mychat.model.Log">
+    insert into log
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="logid != null">
+        logId,
+      </if>
+      <if test="loguserid != null">
+        logUserId,
+      </if>
+      <if test="logtime != null">
+        logTime,
+      </if>
+      <if test="logtype != null">
+        logType,
+      </if>
+      <if test="logdetail != null">
+        logDetail,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="logid != null">
+        #{logid,jdbcType=INTEGER},
+      </if>
+      <if test="loguserid != null">
+        #{loguserid,jdbcType=INTEGER},
+      </if>
+      <if test="logtime != null">
+        #{logtime,jdbcType=VARCHAR},
+      </if>
+      <if test="logtype != null">
+        #{logtype,jdbcType=VARCHAR},
+      </if>
+      <if test="logdetail != null">
+        #{logdetail,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.maxu.mychat.model.LogExample" resultType="java.lang.Integer">
+    select count(*) from log
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update log
+    <set>
+      <if test="record.logid != null">
+        logId = #{record.logid,jdbcType=INTEGER},
+      </if>
+      <if test="record.loguserid != null">
+        logUserId = #{record.loguserid,jdbcType=INTEGER},
+      </if>
+      <if test="record.logtime != null">
+        logTime = #{record.logtime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.logtype != null">
+        logType = #{record.logtype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.logdetail != null">
+        logDetail = #{record.logdetail,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update log
+    set logId = #{record.logid,jdbcType=INTEGER},
+      logUserId = #{record.loguserid,jdbcType=INTEGER},
+      logTime = #{record.logtime,jdbcType=VARCHAR},
+      logType = #{record.logtype,jdbcType=VARCHAR},
+      logDetail = #{record.logdetail,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.maxu.mychat.model.Log">
+    update log
+    <set>
+      <if test="loguserid != null">
+        logUserId = #{loguserid,jdbcType=INTEGER},
+      </if>
+      <if test="logtime != null">
+        logTime = #{logtime,jdbcType=VARCHAR},
+      </if>
+      <if test="logtype != null">
+        logType = #{logtype,jdbcType=VARCHAR},
+      </if>
+      <if test="logdetail != null">
+        logDetail = #{logdetail,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where logId = #{logid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.maxu.mychat.model.Log">
+    update log
+    set logUserId = #{loguserid,jdbcType=INTEGER},
+      logTime = #{logtime,jdbcType=VARCHAR},
+      logType = #{logtype,jdbcType=VARCHAR},
+      logDetail = #{logdetail,jdbcType=VARCHAR}
+    where logId = #{logid,jdbcType=INTEGER}
+  </update>
+  <resultMap id="BaseResultMap" type="com.maxu.mychat.model.Log">
+    <result column="id" jdbcType="VARCHAR" property="id" />
+    <result column="userid" jdbcType="VARCHAR" property="userid" />
+    <result column="time" jdbcType="VARCHAR" property="time" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="detail" jdbcType="VARCHAR" property="detail" />
+    <result column="ip" jdbcType="VARCHAR" property="ip" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, userid, time, type, detail, ip
+  </sql>
+  <select id="selectByExample" parameterType="com.maxu.mychat.model.LogExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from log
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.maxu.mychat.model.LogExample">
+    delete from log
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.maxu.mychat.model.Log">
+    insert into log (id, userid, time, 
+      type, detail, ip)
+    values (#{id,jdbcType=VARCHAR}, #{userid,jdbcType=VARCHAR}, #{time,jdbcType=VARCHAR}, 
+      #{type,jdbcType=VARCHAR}, #{detail,jdbcType=VARCHAR}, #{ip,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.maxu.mychat.model.Log">
+    insert into log
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="userid != null">
+        userid,
+      </if>
+      <if test="time != null">
+        time,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="detail != null">
+        detail,
+      </if>
+      <if test="ip != null">
+        ip,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null">
+        #{time,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="detail != null">
+        #{detail,jdbcType=VARCHAR},
+      </if>
+      <if test="ip != null">
+        #{ip,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.maxu.mychat.model.LogExample" resultType="java.lang.Integer">
+    select count(*) from log
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update log
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userid != null">
+        userid = #{record.userid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.time != null">
+        time = #{record.time,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null">
+        type = #{record.type,jdbcType=VARCHAR},
+      </if>
+      <if test="record.detail != null">
+        detail = #{record.detail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ip != null">
+        ip = #{record.ip,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update log
+    set id = #{record.id,jdbcType=VARCHAR},
+      userid = #{record.userid,jdbcType=VARCHAR},
+      time = #{record.time,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=VARCHAR},
+      detail = #{record.detail,jdbcType=VARCHAR},
+      ip = #{record.ip,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

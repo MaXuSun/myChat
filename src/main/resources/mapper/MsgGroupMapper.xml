@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.maxu.mychat.dao.MsgGroupMapper" >
+  <resultMap id="BaseResultMap" type="com.maxu.mychat.model.MsgGroup" >
+    <id column="msgFrom" property="msgfrom" jdbcType="INTEGER" />
+    <result column="msgContent" property="msgcontent" jdbcType="VARCHAR" />
+    <result column="msgTime" property="msgtime" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    msgFrom, msgContent, msgTime
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.maxu.mychat.model.MsgGroupExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from msggroup
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from msggroup
+    where msgFrom = #{msgfrom,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from msggroup
+    where msgFrom = #{msgfrom,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.maxu.mychat.model.MsgGroupExample" >
+    delete from msggroup
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.maxu.mychat.model.MsgGroup" >
+    insert into msggroup (msgFrom, msgContent, msgTime
+      )
+    values (#{msgfrom,jdbcType=INTEGER}, #{msgcontent,jdbcType=VARCHAR}, #{msgtime,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.maxu.mychat.model.MsgGroup" >
+    insert into msggroup
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="msgfrom != null" >
+        msgFrom,
+      </if>
+      <if test="msgcontent != null" >
+        msgContent,
+      </if>
+      <if test="msgtime != null" >
+        msgTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="msgfrom != null" >
+        #{msgfrom,jdbcType=INTEGER},
+      </if>
+      <if test="msgcontent != null" >
+        #{msgcontent,jdbcType=VARCHAR},
+      </if>
+      <if test="msgtime != null" >
+        #{msgtime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.maxu.mychat.model.MsgGroupExample" resultType="java.lang.Integer" >
+    select count(*) from msggroup
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update msggroup
+    <set >
+      <if test="record.msgfrom != null" >
+        msgFrom = #{record.msgfrom,jdbcType=INTEGER},
+      </if>
+      <if test="record.msgcontent != null" >
+        msgContent = #{record.msgcontent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.msgtime != null" >
+        msgTime = #{record.msgtime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update msggroup
+    set msgFrom = #{record.msgfrom,jdbcType=INTEGER},
+      msgContent = #{record.msgcontent,jdbcType=VARCHAR},
+      msgTime = #{record.msgtime,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.maxu.mychat.model.MsgGroup" >
+    update msggroup
+    <set >
+      <if test="msgcontent != null" >
+        msgContent = #{msgcontent,jdbcType=VARCHAR},
+      </if>
+      <if test="msgtime != null" >
+        msgTime = #{msgtime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where msgFrom = #{msgfrom,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.maxu.mychat.model.MsgGroup" >
+    update msggroup
+    set msgContent = #{msgcontent,jdbcType=VARCHAR},
+      msgTime = #{msgtime,jdbcType=VARCHAR}
+    where msgFrom = #{msgfrom,jdbcType=INTEGER}
+  </update>
+</mapper>
