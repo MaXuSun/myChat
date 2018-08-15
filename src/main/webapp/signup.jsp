@@ -26,19 +26,15 @@
 	</div>
 
 	<div class="top-buttons-agileinfo">
-		<a href="index.html">登录</a><a href="signup.html" class="active">注册</a>
+		<a href="index.jsp">登录</a><a href="#" class="active">注册</a>
 	</div>
-	<h1>Internship Sign In & Sign Up Form</h1>
 	<div class="main-agileits">
 		<!--form-stars-here-->
 		<div class="form-w3-agile">
-			<h2 class="sub-agileits-w3layouts">Sign Up</h2>
+			<h2 class="sub-agileits-w3layouts">注册</h2>
 			<form action="#" method="post">
 				<input type="text" name="Username" placeholder="用户名" required="" />
 				<input type="password" name="Password" placeholder="密码" required="" />
-				<input type="password" name="Password_confirm" placeholder="密码验证"
-					required="" /> <input type="email" name="email" placeholder="邮箱"
-					required="" />
 				<div class="submit-w3l">
 					<input type="submit" value="注册">
 				</div>
@@ -50,11 +46,9 @@
 	<div class="copyright w3-agile">
 		<p>
 			© 2017 Internship Sign In & Sign Up Form . All rights reserved |
-			Design by <a href="http://w3layouts.com/" target="_blank">W3layouts</a>
+			Design by <a href="#">W3layouts</a>
 		</p>
 	</div>
-	<!-- //copyright -->
 	<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
-
 </body>
 </html>
