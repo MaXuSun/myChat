@@ -15,13 +15,27 @@ public class UserService {
 
   @Autowired
   UserMapper userMapper;
-  
+
+  /**
+   * 返回nickname 为username 的用户
+   * 
+   * @param username
+   * @return
+   */
   public List<User> getUser(String username) {
     UserExample example = new UserExample();
-    Criteria criteria =  example.createCriteria();
+    Criteria criteria = example.createCriteria();
     criteria.andUsernicknameEqualTo(username);
-    
-    return userMapper.selectByExample(example);
+    List<User> result = userMapper.selectByExample(example);
+    return result;
   }
-  
+
+  public void addUserSelective(User user) {
+    userMapper.insertSelective(user);
+  }
+
+  public void addUser(User user) {
+    userMapper.insert(user);
+  }
+
 }

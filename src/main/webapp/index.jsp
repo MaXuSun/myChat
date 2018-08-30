@@ -9,6 +9,12 @@
 <%
   pageContext.setAttribute("APP_PATH", request.getContextPath());
 %>
+<%
+  Object user = session.getAttribute("user");
+			Object msg = session.getAttribute("msg");
+%>
+<% 
+%>
 <link href="${APP_PATH}/static/sources/css/font-awesome.min.css"
 	rel="stylesheet" type="text/css" media="all">
 <link href="${APP_PATH}/static/sources/css/snow.css" rel="stylesheet"
@@ -29,8 +35,7 @@
 	</div>
 
 	<div class="top-buttons-agileinfo">
-		<a href="#" class="active">登录</a><a id="signup"
-			href="signup.jsp" >注册</a>
+		<a href="#" class="active">登录</a><a id="signup" href="signup.jsp">注册</a>
 	</div>
 	<h1>登陆</h1>
 	<div class="main-agileits">
@@ -55,8 +60,12 @@
 			Design by <a href="#">W3layouts</a>
 		</p>
 	</div>
-	
+
 	<script type="text/javascript">
+		$("#login").click(function(){
+			var h = '<%=msg%>';
+			alert(h);
+		});
 	</script>
 
 </body>

@@ -1,13 +1,16 @@
-package com.maxu.mychat.model;
+package com.maxu.mychat.utils;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
  * 通用的返回类，json返回用
  * @author MaXU
  *
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class TipMsg {
   //状态码（自定义） 100-成功  200-失败
   private int code;

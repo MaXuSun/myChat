@@ -4,9 +4,11 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>主页</title>
+<title>聊天主页</title>
 <%
   pageContext.setAttribute("APP_PATH", request.getContextPath());
+%>
+<% int userId = Integer.parseInt(response.getHeader("userId"));
 %>
 <link rel="stylesheet"
 	href="${APP_PATH}/static/plugins/layui/css/layui.css">
@@ -20,7 +22,7 @@
 				<li class="layui-nav-item"><a href="#"> <img
 						src="http://t.cn/RCzsdCq" class="layui-nav-img"> 贤心
 				</a></li>
-				<li class="layui-nav-item"><a href="index.jsp">注销</a></li>
+				<li class="layui-nav-item"><a href="loginout" id="loginout">注销</a></li>
 			</ul>
 		</div>
 
@@ -82,6 +84,9 @@
 			var element = layui.element;
 
 		});
+		
+		var id = "<%=userId%>";
+		alert(id);
 	</script>
 </body>
 </html>

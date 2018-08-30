@@ -14,6 +14,8 @@
 	type="text/css" media="all" />
 <link href="${APP_PATH}/static/sources/css/style.css" rel="stylesheet"
 	type="text/css" media="all" />
+<script type="text/javascript"
+	src="${APP_PATH}/static/sources/js/jquery-2.1.4.min.js"></script>
 </head>
 <body>
 	<div class="snow-container">
@@ -32,13 +34,13 @@
 		<!--form-stars-here-->
 		<div class="form-w3-agile">
 			<h2 class="sub-agileits-w3layouts">注册</h2>
-			<form action="#" method="post">
-				<input type="text" name="Username" placeholder="用户名" required="" />
-				<input type="password" name="Password" placeholder="密码" required="" />
-				<div class="submit-w3l">
-					<input type="submit" value="注册">
-				</div>
+			<form id="signup_form">
+				<input type="text" name="username" placeholder="用户名" required="" />
+				<input type="password" name="password" placeholder="密码" required="" />
 			</form>
+			<div class="submit-w3l">
+				<input type="submit" id="signup_button" value="注册">
+			</div>
 		</div>
 	</div>
 	<!--//form-ends-here-->
@@ -49,6 +51,23 @@
 			Design by <a href="#">W3layouts</a>
 		</p>
 	</div>
-	<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript">
+		$(function() {
+			$("#signup_button").click(function() {
+				alert("dasfas");
+				var h = $("#signup_form").serialize();
+				alert(h);
+				$.ajax({
+					url : "${APP_PATH}/signup",
+					type : "POST",
+					data : $("#signup_form").serialize(),
+					success : function(result) {
+						console.log(result);
+						alert(result);
+					}
+				})
+			});
+		});
+	</script>
 </body>
 </html>

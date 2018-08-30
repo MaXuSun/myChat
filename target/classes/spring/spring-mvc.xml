@@ -15,10 +15,17 @@
 	</context:component-scan>
 
 	<!-- 配置视图解析器，方面页面返回回 -->
-	<bean
+	<bean id="first"
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/WEB-INF/views/"></property>
 		<property name="suffix" value=".jsp"></property>
+		<property name="order" value="0"></property>
+	</bean>
+	<bean id="second"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/"></property>
+		<property name="suffix" value=".jsp"></property>
+		<property name="order" value="1"></property>
 	</bean>
 
 	<!-- 两个标准配置 -->

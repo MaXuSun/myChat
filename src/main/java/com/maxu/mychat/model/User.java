@@ -1,5 +1,7 @@
 package com.maxu.mychat.model;
 
+import java.util.HashMap;
+
 public class User {
     private Integer userid;
 
@@ -20,6 +22,8 @@ public class User {
     private String useremail;
 
     private String userip;
+    
+   
 
     public Integer getUserid() {
         return userid;

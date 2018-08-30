@@ -146,7 +146,7 @@ a.forgot-w3layouts {
     text-transform: capitalize;
     color: #fff;
 }
-.submit-w3l input[type="submit"] {
+.submit-w3l input[type="submit"]{
     background: #fff;
     color: #000;
     outline: none;
@@ -167,6 +167,10 @@ a.forgot-w3layouts {
     -o-transition: 0.3s all;
     -ms-transition: 0.3s all;
 }
+#signup_button{
+	background: #fff;
+}
+
 .submit-w3l input[type="submit"]:hover{
     background: #df5799;
 	color:#ffffff;
