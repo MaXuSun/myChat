@@ -39,7 +39,7 @@ public class LoginController {
   @RequestMapping("/chat")
   public String getChat(String username,String password,HttpSession session,HttpServletResponse response) throws JsonProcessingException {
     //System.out.println(username);
-    List<User> users = userService.getUser(username);
+    List<User> users = userService.getUserByName(username);
     session.removeAttribute("msg");
     String string;
     if(users == null||users.size() == 0) {
@@ -60,6 +60,11 @@ public class LoginController {
     return "redirect:index.jsp";
   }
   
+  /**
+   * 注销成功后跳转到登陆界面
+   * @param session
+   * @return
+   */
   @RequestMapping("/loginout")
   public String loginOut(HttpSession session) {
     OnlineUser.removeUser( ((User) session.getAttribute("user")).getUserid());
@@ -68,12 +73,19 @@ public class LoginController {
     return "redirect:index.jsp";
   }
   
+  
+  /**
+   * 注册成功后就在数据库中新建一个用户
+   * @param username
+   * @param password
+   * @return
+   */
   @RequestMapping("/signup")
   @ResponseBody
   public TipMsg signup(String username,String password) {
     System.out.println(username);
     System.out.println(password);
-    List<User> users = userService.getUser(username);
+    List<User> users = userService.getUserByName(username);
     if(users == null||users.size() == 0) {
      User user = new User();
      user.setUsernickname(username);

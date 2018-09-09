@@ -62,10 +62,12 @@
 	</div>
 
 	<script type="text/javascript">
+	$(function(){
 		$("#login").click(function(){
 			var h = '<%=msg%>';
 			alert(h);
 		});
+	});
 	</script>
 
 </body>
